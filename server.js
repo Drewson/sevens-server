@@ -33,7 +33,7 @@ app.post('/stripe', (req, res) => {
     return stripe.customers.createSource(customer.id, {source: token.id});
   }).then(function(source) {
     return stripe.charges.create({
-      amount: 10,
+      amount: 100,
       currency: 'usd',
       customer: source.customer
     });
