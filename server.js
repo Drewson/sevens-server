@@ -9,17 +9,13 @@ var port = Number(process.env.PORT || 8080);
 
 app.use(json())
 
-app.all('/*', function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "X-Requested-With");
-  next();
-});
-
 app.use(cors());
 
 app.listen(port, function () {
   console.log('Sevens listening on port: ' + port)
 })
+
+app.options('*', cors())
 
 app.get('/', (req, res) => {
   console.log('hello');
@@ -29,7 +25,7 @@ app.get('/stripe', (req, res) => {
   console.log('hello from stripe');
 })
 
-app.post('/stripe/:total', (req, res) => {
+app.post('/stripe/:total', cors(), (req, res) => {
   console.log(req.body)
   var total = 100;
   total = req.params.total * 10;
