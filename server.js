@@ -5,12 +5,13 @@ const cors = require('cors');
 var stripe = require("stripe")(
   "sk_live_YP4647ryPwzlBaNTXfdgwBjw"
 );
+var port = Number(process.env.PORT || 8080);
 
 app.use(cors())
 
 app.use(json())
 
-app.listen(3001, function () {
+app.listen(port, function () {
   console.log('Sevens listening on port 3001!')
 })
 
