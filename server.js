@@ -15,7 +15,17 @@ app.listen(port, function () {
   console.log('Sevens listening on port: ' + port)
 })
 
-app.options('*', cors())
+
+var whitelist = ['https://sevens-client.herokuapp.com', 'https://sevens-client.herokuapp.com/cart']
+var corsOptionsDelegate = function (req, callback) {
+  var corsOptions;
+  if (whitelist.indexOf(req.header('Origin')) !== -1) {
+    corsOptions = { origin: true } // reflect (enable) the requested origin in the CORS response
+  }else{
+    corsOptions = { origin: false } // disable CORS for this request
+  }
+  callback(null, corsOptions) // callback expects two parameters: error and options
+}
 
 app.get('/', (req, res) => {
   console.log('hello');
@@ -25,7 +35,7 @@ app.get('/stripe', (req, res) => {
   console.log('hello from stripe');
 })
 
-app.post('/stripe/:total', cors(), (req, res) => {
+app.post('/stripe/:total', cors(corsOptionsDelegate), (req, res) => {
   console.log(req.body)
   var total = 100;
   total = req.params.total * 10;
