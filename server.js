@@ -26,16 +26,22 @@ app.get('/stripe', (req, res) => {
 app.post('/stripe', (req, res) => {
   console.log(req.body)
   var token = req.body;
-  var charge = stripe.charges.create({
-    amount: 1,
-    currency: "usd",
-    description: 'payment success',
-    source: token,
-    receipt_email: token.email
-  }, function(err, charge) {
-    err === undefined &&
-      res.send(JSON.parse('Success!'));
+
+  stripe.customers.create({
+    email: token.email
+  }).then(function(customer){
+    return stripe.customers.createSource(customer.id, {source: token});
+  }).then(function(source) {
+    return stripe.charges.create({
+      amount: 1,
+      currency: 'usd',
+      customer: source.customer
+    });
+  }).then(function(charge) {
+    // New charge created on a new customer
     console.log(charge)
+  }).catch(function(err) {
+    // Deal with an error
     console.log(err)
   });
 })
