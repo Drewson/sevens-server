@@ -30,6 +30,7 @@ app.post('/stripe', (req, res) => {
     source: token,
     receipt_email: token.email
   }, function(err, charge) {
+    res.send().status(200);
     console.log(charge)
     console.log(err)
   });
