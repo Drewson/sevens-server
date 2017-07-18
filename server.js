@@ -25,10 +25,10 @@ app.get('/stripe', (req, res) => {
 
 app.post('/stripe/:total', (req, res) => {
   var total = parseInt(req.params.total)
-  console.log(req.body)
+  console.log(total)
   var token = req.body;
   var charge = stripe.charges.create({
-    amount: total,
+    amount: 1,
     currency: "usd",
     description: 'payment success',
     source: token,
