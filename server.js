@@ -23,8 +23,7 @@ app.get('/stripe', (req, res) => {
   console.log('hello from stripe');
 })
 
-app.post('/stripe/:total', (req, res) => {
-  var total = parseInt(req.params.total)
+app.post('/stripe', (req, res) => {
   console.log(total)
   var token = req.body;
   var charge = stripe.charges.create({
