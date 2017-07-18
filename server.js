@@ -25,11 +25,11 @@ app.get('/stripe', (req, res) => {
 
 app.post('/stripe', (req, res) => {
   console.log(req.body)
-  var token = req.body.token;
+  var token = req.body;
   var charge = stripe.charges.create({
-    amount: req.body.total,
+    amount: token.total,
     currency: "usd",
-    description: token.description,
+    description: token.created,
     source: token,
     receipt_email: token.email
   }, function(err, charge) {
