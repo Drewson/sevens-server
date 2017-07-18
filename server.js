@@ -23,8 +23,9 @@ app.get('/stripe', (req, res) => {
   console.log('hello from stripe');
 })
 
-app.post('/stripe', (req, res) => {
+app.post('/stripe/:total', (req, res) => {
   console.log(req.body)
+  var total = req.params.total
   var token = req.body;
 
   stripe.customers.create({
