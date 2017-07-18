@@ -25,7 +25,9 @@ app.get('/stripe', (req, res) => {
 
 app.post('/stripe/:total', (req, res) => {
   console.log(req.body)
-  var total = req.params.total
+  var total = 100;
+  total = req.params.total
+  console.log(total)
   var token = req.body;
 
   stripe.customers.create({
@@ -34,7 +36,7 @@ app.post('/stripe/:total', (req, res) => {
     return stripe.customers.createSource(customer.id, {source: token.id});
   }).then(function(source) {
     return stripe.charges.create({
-      amount: 100,
+      amount: total,
       currency: 'usd',
       customer: source.customer
     });
