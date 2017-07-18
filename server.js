@@ -16,6 +16,10 @@ app.get('/', (req, res) => {
   console.log('hello');
 })
 
+app.get('/stripe', (req, res) => {
+  console.log('hello from stripe');
+})
+
 app.post('/stripe', (req, res) => {
   console.log(req.body)
   var token = req.body.token;
