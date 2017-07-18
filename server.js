@@ -1,7 +1,6 @@
 const express = require('express')
 const app = express()
 const json = require('body-parser').json;
-const cors = require('cors');
 var stripe = require("stripe")(
   "sk_live_YP4647ryPwzlBaNTXfdgwBjw"
 );
@@ -20,13 +19,14 @@ app.get('/', (req, res) => {
 })
 
 app.post('/stripe', (req, res) => {
-  console.log(req.body.token)
+  console.log(req.body)
   var token = req.body.token;
   var charge = stripe.charges.create({
-    amount: 1,
+    amount: req.body.total,
     currency: "cad",
     description: "Example charge",
     source: token,
+    receipt_email: token.email
   }, function(err, charge) {
     console.log(charge)
     console.log(err)
