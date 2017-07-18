@@ -9,7 +9,7 @@ var port = Number(process.env.PORT || 8080);
 app.use(json())
 
 app.listen(port, function () {
-  console.log('Sevens listening on port')
+  console.log('Sevens listening on port: ' + port)
 })
 
 app.get('/', (req, res) => {
@@ -25,7 +25,7 @@ app.post('/stripe', (req, res) => {
   var token = req.body.token;
   var charge = stripe.charges.create({
     amount: req.body.total,
-    currency: "cad",
+    currency: "usd",
     description: token.description,
     source: token,
     receipt_email: token.email
