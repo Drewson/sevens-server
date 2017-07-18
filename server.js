@@ -26,7 +26,7 @@ app.get('/stripe', (req, res) => {
 app.post('/stripe/:total', (req, res) => {
   console.log(req.body)
   var total = 100;
-  total = req.params.total * 100;
+  total = req.params.total * 10;
   console.log(total)
   var token = req.body;
 
