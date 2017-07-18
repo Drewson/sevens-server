@@ -20,25 +20,17 @@ var whitelist = ['https://sevens-client.herokuapp.com', 'https://sevens-client.h
 var corsOptionsDelegate = function (req, callback) {
   var corsOptions;
   if (whitelist.indexOf(req.header('Origin')) !== -1) {
-    corsOptions = { origin: true } // reflect (enable) the requested origin in the CORS response
+    corsOptions = { origin: true }
   }else{
-    corsOptions = { origin: false } // disable CORS for this request
+    corsOptions = { origin: false }
   }
-  callback(null, corsOptions) // callback expects two parameters: error and options
+  callback(null, corsOptions)
 }
-
-app.get('/', (req, res) => {
-  console.log('hello');
-})
-
-app.get('/stripe', (req, res) => {
-  console.log('hello from stripe');
-})
 
 app.post('/stripe/:total', cors(corsOptionsDelegate), (req, res) => {
   console.log(req.body)
   var total = 100;
-  total = req.params.total * 10;
+  total = req.params.total * 100;
   console.log(total)
   var token = req.body;
 
@@ -53,10 +45,11 @@ app.post('/stripe/:total', cors(corsOptionsDelegate), (req, res) => {
       customer: source.customer
     });
   }).then(function(charge) {
-    // New charge created on a new customer
+    res.send().status(200)
+    res.send(JSON.parse('Success'))
     console.log(charge)
   }).catch(function(err) {
-    // Deal with an error
+    res.send(JSON.parse('broke'))
     console.log(err)
   });
 })
