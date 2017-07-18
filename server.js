@@ -24,7 +24,7 @@ app.get('/stripe', (req, res) => {
 })
 
 app.post('/stripe', (req, res) => {
-  console.log(total)
+
   var token = req.body;
   var charge = stripe.charges.create({
     amount: 1,
