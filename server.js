@@ -1,5 +1,6 @@
 const express = require('express')
 const app = express();
+const cors = require('cors')
 const json = require('body-parser').json;
 var stripe = require("stripe")(
   "sk_live_YP4647ryPwzlBaNTXfdgwBjw"
@@ -7,6 +8,8 @@ var stripe = require("stripe")(
 var port = Number(process.env.PORT || 8080);
 
 app.use(json())
+
+app.use(cors());
 
 app.listen(port, function () {
   console.log('Sevens listening on port: ' + port)
