@@ -1,5 +1,6 @@
 const express = require('express')
 const app = express();
+var fs = require('fs');
 const cors = require('cors')
 const json = require('body-parser').json;
 var stripe = require("stripe")(
@@ -26,6 +27,22 @@ var corsOptionsDelegate = function (req, callback) {
   }
   callback(null, corsOptions)
 }
+
+app.post('/email', (req, res) => {
+  console.log(req.body)
+  res.send(200)
+  let email = req.body.email + '\n'
+
+  fs.open('./emailList.txt', 'a', (err, fd) => {
+    fs.write(fd, email, function(err) {
+      if(err) {
+          return console.log(err);
+      }
+      console.log("The file was saved!");
+    });
+  })
+
+})
 
 app.post('/stripe/:total', cors(corsOptionsDelegate), (req, res) => {
   console.log(req.body)
