@@ -6,12 +6,10 @@ var stripe = require("stripe")(
 );
 var port = Number(process.env.PORT || 8080);
 
-app.use(cors())
-
 app.use(json())
 
 app.listen(port, function () {
-  console.log('Sevens listening on port 3001!')
+  console.log('Sevens listening on port')
 })
 
 app.get('/', (req, res) => {
@@ -24,7 +22,7 @@ app.post('/stripe', (req, res) => {
   var charge = stripe.charges.create({
     amount: req.body.total,
     currency: "cad",
-    description: "Example charge",
+    description: token.description,
     source: token,
     receipt_email: token.email
   }, function(err, charge) {
