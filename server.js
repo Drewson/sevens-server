@@ -15,6 +15,10 @@ app.listen(port, function () {
   console.log('Sevens listening on port 3001!')
 })
 
+app.get('/', (req, res) => {
+  console.log('hello');
+})
+
 app.post('/stripe', (req, res) => {
   console.log(req.body.token)
   var token = req.body.token;
