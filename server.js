@@ -30,7 +30,7 @@ app.post('/stripe', (req, res) => {
   stripe.customers.create({
     email: token.email
   }).then(function(customer){
-    return stripe.customers.createSource(customer.id, {source: token});
+    return stripe.customers.createSource(customer.id, {source: token.id});
   }).then(function(source) {
     return stripe.charges.create({
       amount: 1,
